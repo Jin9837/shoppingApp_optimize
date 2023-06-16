@@ -4,6 +4,8 @@ import com.example.shoppingapp_3.common.ApiRestResponse;
 import com.example.shoppingapp_3.domain.Product;
 import com.example.shoppingapp_3.domain.dto.ProductWithIgnoredFields;
 import com.example.shoppingapp_3.service.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,6 +27,8 @@ public class ProductController {
 
     @GetMapping("/user/product_detail")
     @PreAuthorize("hasAnyAuthority('buyer')")
+//    @ApiOperation(value = "Find product detail for user", response = Product.class)
+    @Operation(summary = "Returns Hello World", security = @SecurityRequirement(name = "bearerAuth"))
     public ApiRestResponse getProductByBuyer (@RequestParam("pid") Long pid)
     {
         return ApiRestResponse.success(productService.detailForBuyer(pid));
